@@ -2,8 +2,8 @@ import subprocess
 from flask import Blueprint, jsonify
 
 api_routes = Blueprint('api', __name__)
-
 # Home route defined in app.py
+
 
 @api_routes.route('/api/test', methods=['GET'])
 def test_route():
@@ -17,11 +17,11 @@ def update_server():
   try:
     commands = (
       "cd /home/hjuarez/webAppProj && "
-      "git fetch --all &&"
+      "git fetch --all && "
       "git reset --hard origin/main"
     )
     subprocess.check_call(commands, shell=True)
-    return jsonify({"message": "gitHub push recieved"})
+    return jsonify({"message": "gitHub push recieved"}), 200
 
   except subprocess.CalledProcessError as e:
     return jsonify({"error": str(e)}), 500
