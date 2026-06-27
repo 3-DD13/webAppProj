@@ -18,7 +18,7 @@ def update_server():
     commands = (
       "cd /home/hjuarez/webAppProj && "
       "git fetch --all && "
-      "git reset --hard origin/main "
+      "git reset --hard origin/main && "
       "touch /var/www/hjuarez_pythonanywhere_com_wsgi.py"
     )
     subprocess.check_call(commands, shell=True)
