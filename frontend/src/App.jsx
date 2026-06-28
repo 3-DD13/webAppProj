@@ -1,13 +1,35 @@
 import { useState } from 'react'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
 
   return (
     <>
-      <h1>Final Project: Live App</h1>
-      <button onClick={() => setCount((count) => count + 1)}>Count: {count}</button>
-      <p>For testing, remove later</p>
+      <header>
+        <h1>Group Study</h1>
+      </header>
+        <form className="usernameBox">
+        <label>
+          Username:
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)} />
+        </label>
+        <label>
+          Password:
+          <input
+            id="pass"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </label>
+        <button type='button' id='signIn'>Sign In</button>
+        <button type='button' id='createAcc'>Create Account</button>
+      </form>
+      <p>Needs styling</p>
     </>
   )
 }
