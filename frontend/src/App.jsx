@@ -9,14 +9,14 @@ function App() {
       <header>
         <h1>Group Study</h1>
       </header>
-        <form className="usernameBox">
+      <form className="usernameBox">
         <label>
           Username:
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)} />
-        </label>
+        </label><br />
         <label>
           Password:
           <input
@@ -24,7 +24,7 @@ function App() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-          />
+          /><br />
         </label>
         <button type='button' id='signIn'>Sign In</button>
         <button type='button' id='createAcc'>Create Account</button>
