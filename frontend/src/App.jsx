@@ -1,4 +1,7 @@
-import { useState } from 'react'
+import axios from 'axios';
+import { useState } from 'react';
+
+axios.defaults.withCredentials = true;
 
 function App() {
   const [password, setPassword] = useState("");
