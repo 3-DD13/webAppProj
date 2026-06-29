@@ -2,8 +2,8 @@ import os
 from flask import Flask, send_from_directory
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
-from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
+from models import db
 
 load_dotenv()
 
@@ -14,13 +14,7 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(BASE_DIR, 'site.db')}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
-
-# User db model
-class User(db.Model):
-  id = db.Column(db.Integer, primary_key=True)
-  username = db.Column(db.String(50), unique=True, nullable=False)
-  password_hash = db.Column(db.String(256), nullable=False)
+db.init_app(app)
 
 app.config['JWT_SECRET_KEY'] = os.environ.get("JWT_SECRET_KEY")
 app.config['JWT_TOKEN_LOCATION'] = ["cookies"]

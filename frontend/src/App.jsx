@@ -7,6 +7,18 @@ function App() {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
 
+  const handleAuth = async (endpoint) => {
+    try {
+      const response = await axios.post('http://localhost:5000${endpoint}', {
+        username,
+        password
+      });
+      alert(response.data.message);
+    } catch (error) {
+      alert(error.response?.data?.error || "An error occurred");
+    }
+  };
+
   return (
     <>
       <header>
@@ -29,8 +41,8 @@ function App() {
             onChange={(e) => setPassword(e.target.value)}
           /><br />
         </label>
-        <button type='button' id='signIn'>Sign In</button>
-        <button type='button' id='createAcc'>Create Account</button>
+        <button type='button' id='signIn' onClick={() => handleAuth('/login/')}>Sign In</button>
+        <button type='button' id='createAcc' onClick={() => handleAuth('/register/')}>Create Account</button>
       </form>
       <p>Needs styling</p>
     </>

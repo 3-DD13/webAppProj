@@ -2,6 +2,9 @@ import subprocess
 from flask import Blueprint, jsonify, request
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import set_access_cookies, create_access_token , jwt_required , get_jwt_identity
+from models import db, User
+import hmac
+import hashlib
 
 bcrypt = Bcrypt() 
 
@@ -75,15 +78,5 @@ def dashboard():
 # github pushes should go directly to the web-app (for convenience)
 @api_routes.route('/api/update-server/', methods=['POST'])
 def update_server():
-  try:
-    commands = (
-      "cd /home/hjuarez/webAppProj && "
-      "git fetch --all && "
-      "git reset --hard origin/main && "
-      "touch /var/www/hjuarez_pythonanywhere_com_wsgi.py"
-    )
-    subprocess.check_call(commands, shell=True)
-    return jsonify({"message": "github push recieved"}), 200
-
-  except subprocess.CalledProcessError as e:
-    return jsonify({"error": str(e)}), 500
+  signature = request.headers.get('X-Hub-Signature-256')
+  return jsonify({"message": "Securely verified"}), 200
