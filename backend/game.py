@@ -89,6 +89,29 @@ def start_picking_phase(socketio):
         on_expire = lambda: auto_pick_word(socketio, word_choices),
     )
 
+def auto_pick_word(socketio, word_choices):
+    with _lock:
+        if game_state["pgase"] != "PICKING_WORD":
+            return
+        word = random.choice(word_choices)
+        begin_drawing_phase(socketio, word)
+
+def begin_drawing_phase(socketio, word):
+    game_state["phase"] = "DRAWING"
+    game_state["word"] = word
+    game_state["word_hint"] = make_hint(word)
+    game_state["round_started_at"] = time.time()
+    
+    drawer_sid = game_state["drawer_sid"]
+    socketio.emit("your_word", {"word": word}, room=drawer_sid)
+    broadcast_state(socketio)
+    
+    start_timer(
+        socketio,
+        seconds=TURN_SECONDS,
+        on_expire=lambda: end_round(socketio, reason="timeout"),
+        )
+  
     half = TURN_SECONDS / 2
     def reveal():
         with _lock:
