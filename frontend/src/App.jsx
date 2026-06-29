@@ -15,7 +15,8 @@ function App() {
       });
       alert(response.data.message);
     } catch (error) {
-      alert(error.response?.data?.error || "An error occurred");
+      const errorMessage = error.response?.data?.error || error.response?.data?.message || "An error occurred";
+      alert(errorMessage);
     }
   };
 
