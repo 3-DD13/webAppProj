@@ -2,9 +2,9 @@ import subprocess
 from flask import Blueprint, jsonify, request
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import set_access_cookies, create_access_token , jwt_required , get_jwt_identity
-from models import db, User
 import hmac
 import hashlib
+from models import db, User
 
 bcrypt = Bcrypt() 
 
@@ -21,7 +21,6 @@ def test_route():
 # route for registering new user
 @api_routes.route("/register/", methods=["POST"])
 def register():
-  from app import db, User
 
   data = request.json
 
@@ -44,8 +43,6 @@ def register():
 
 @api_routes.route("/login/", methods=["POST"])
 def login():
-  from app import User
-
   data = request.json
   
   user = User.query.filter_by(username=data["username"]).first()
@@ -63,8 +60,6 @@ def login():
 @api_routes.route("/dashboard/")
 @jwt_required()
 def dashboard():
-  from app import User
-
   username = get_jwt_identity()
   
   user = User.query.filter_by(username=username).first()

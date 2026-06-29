@@ -9,7 +9,7 @@ function App() {
 
   const handleAuth = async (endpoint) => {
     try {
-      const response = await axios.post('http://localhost:5000${endpoint}', {
+      const response = await axios.post(`http://localhost:5000/${endpoint}`, {
         username,
         password
       });
