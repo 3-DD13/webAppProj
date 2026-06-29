@@ -24,6 +24,12 @@ def register():
 
   data = request.json
 
+  username = data.get("username", "").strip()
+  password = data.get("password", "")
+
+  if not username or not password:
+    return jsonify({"error": "Username and password required"}), 400
+
   hashed_pw = bcrypt.generate_password_hash(
     data["password"]
   ).decode("utf-8")
@@ -36,8 +42,12 @@ def register():
     username=data["username"],
     password_hash=hashed_pw
   )
-  db.session.add(new_user)
-  db.session.commit()
+  try:
+    db.session.add(new_user)
+    db.session.commit()
+  except IntegrityError:
+    db.session.rollback()
+    return jsonify({"error": "Username already taken"}), 400
 
   return jsonify({"message": "User created"}), 201
 
@@ -45,6 +55,12 @@ def register():
 def login():
   data = request.json
   
+  username = data.get("username", "").strip()
+  password = data.get("password", "")
+
+  if not username or not password:
+    return jsonify({"error": "Username and password required"}), 400
+
   user = User.query.filter_by(username=data["username"]).first()
 
   if not user or not bcrypt.check_password_hash(user.password_hash, data["password"]):
