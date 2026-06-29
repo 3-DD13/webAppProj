@@ -1,3 +1,4 @@
+from sqlite3 import IntegrityError
 import subprocess
 from flask import Blueprint, jsonify, request
 from flask_bcrypt import Bcrypt

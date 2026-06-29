@@ -5,14 +5,14 @@ from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
 from models import db
 
-load_dotenv()
-
 app = Flask(__name__, static_folder='../frontend/dist', static_url_path='/')
 
 # database config
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(BASE_DIR, 'site.db')}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+print(f"DEBUG: JWT_SECRET_KEY is {os.environ.get('JWT_SECRET_KEY')}") # Check your terminal
 
 db.init_app(app)
 
