@@ -20,11 +20,11 @@ db.init_app(app)
 app.config['JWT_SECRET_KEY'] = os.environ.get("JWT_SECRET_KEY")
 app.config['JWT_TOKEN_LOCATION'] = ["cookies"]
 app.config['JWT_COOKIE_SECURE'] = False
-app.config['JWT_COOKIE_CSRF_PROTECT'] = True
+app.config['JWT_COOKIE_CSRF_PROTECT'] = False
 
 jwt = JWTManager(app)
-CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}}, supports_credentials=True)
-socketio = SocketIO(app, cors_allowed_origins= "http://localhost:5173")
+CORS(app, resources={r"/*": {"origins": ["http://localhost:5173", "http://127.0.0.1:5173"]}}, supports_credentials=True)
+socketio = SocketIO(app, cors_allowed_origins= ["http://localhost:5173", "http://127.0.0.1:5173"])
 
 from routes import api_routes, bcrypt
 bcrypt.init_app(app)
