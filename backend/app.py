@@ -2,7 +2,6 @@ import os
 from flask import Flask, send_from_directory
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
-from flask_socketio import SocketIO
 from dotenv import load_dotenv
 from models import db
 
@@ -27,7 +26,6 @@ app.config['JWT_COOKIE_SAMESITE'] = 'None'
 
 jwt = JWTManager(app)
 CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}}, supports_credentials=True)
-socketio = SocketIO(app, cors_allowed_origins= "http://localhost:5173")
 
 from routes import api_routes, bcrypt
 bcrypt.init_app(app)
