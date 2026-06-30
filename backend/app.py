@@ -24,10 +24,16 @@ app.config['JWT_COOKIE_SECURE'] = True
 app.config['JWT_COOKIE_CSRF_PROTECT'] = False
 
 # shares cookies between localhost and 127
-app.config['JWT_COOKIE_SAMESITE'] = 'None'
+app.config['JWT_COOKIE_SAMESITE'] = 'Lax'
 
 jwt = JWTManager(app)
-CORS(app, resources={r"/*": {"origins": ["http://localhost:5173", "http://127.0.0.1:5173"]}}, supports_credentials=True)
+CORS(app, resources={
+  r"/*": 
+  {"origins": [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "https://hjuarez.pythonanywhere.com"
+    ]}}, supports_credentials=True)
 
 from routes import api_routes, bcrypt
 bcrypt.init_app(app)

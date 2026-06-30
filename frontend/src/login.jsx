@@ -6,11 +6,11 @@ function Login(){
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
+  // for local changes put http://127.0.0.1:5000 before /login/
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:5000/login/', {username, password});
+      const response = await axios.post('/login/', {username, password});
       navigate('/dashboard/');
     } catch (error) {
       alert(error.response?.data?.message || "Login failed");

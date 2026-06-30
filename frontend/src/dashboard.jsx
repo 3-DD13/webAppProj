@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 function Dashboard(){
   const [message, setMessage] = useState("Loading your dashboard...");
   const navigate = useNavigate();
-
+  // for local changes put http://127.0.0.1:5000 before /dashboard/
   useEffect(() => {
-    axios.get('http://127.0.0.1:5000/dashboard/')
+    axios.get('/dashboard/')
   .then(response => {
     setMessage(response.data.message);
   })

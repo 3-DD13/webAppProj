@@ -6,11 +6,11 @@ function Register(){
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
+  // for local changes put http://127.0.0.1:5000 before /register/
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:5000/register/', {username, password});
+      const response = await axios.post('/register/', {username, password});
       navigate('/login/');
     } catch (error) {
       alert(error.response?.data?.error || error.response?.data?.message || "Registration Failed");
