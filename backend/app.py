@@ -5,10 +5,12 @@ from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
 from models import db
 
-app = Flask(__name__, static_folder='../frontend/dist', static_url_path='/')
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+FRONTEND_DIST = os.path.abspath(os.path.join(BASE_DIR, '..', 'frontend', 'dist'))
+
+app = Flask(__name__, static_folder=FRONTEND_DIST, static_url_path='/')
 
 # database config
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(BASE_DIR, 'site.db')}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
