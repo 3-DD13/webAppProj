@@ -95,9 +95,6 @@ def webhook():
     repo_dir = '/home/hjuarez/webAppProj'
     subprocess.run(['git', '-C', repo_dir, 'pull'], check=True)
 
-    frontend_dir = os.path.join(repo_dir, 'frontend')
-    subprocess.run(['npm', 'run', 'build'], cwd=frontend_dir, check=True)
-
     wsgi_file = '/var/www/hjuarez_pythonanywhere_com_wsgi.py'
     subprocess.run(['touch', wsgi_file], check=True)
 
