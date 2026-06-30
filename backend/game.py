@@ -6,7 +6,6 @@ from flask import Blueprint, jsonify, request
 
 MIN_PLAYERS = 2
 TURN_SECONDS = 60
-PICK_SECONDS = 15
 ROUND_END_DELAY = 5
 MAX_SCORE_PER_GUESS = 100
 MIN_SCORE_PER_GUESS = 10
@@ -105,20 +104,19 @@ def remove_player(username, reason):
     if username in game_state["turn_order"]:
         idx = game_state["turn_order"].index(username)
         game_state["turn_order"].remove(username)
-
         if idx <= game_state["turn_index"] and game_state["turn_index"] > 0:
             game_state["turn_index"] -= 1
-        game_state["correct_guessers"].discard(username)
-        push_message("player_left", username = username, reason = reason)
+    game_state["correct_guessers"].discard(username)
+    push_message("player_left", username=username, reason=reason)
 
-        if username == game_state["drawer"]:
-            if game_state["phase"] == "DRAWING":
-                force_end_round(reason = "drawer left")
-                return
-        
-        if len(game_state["players"]) < MIN_PLAYERS and game_state["phase"] != "WAITING":
-            game_state["phase"] = "WAITING"
-            game_state["phase_changed_at"] = time.time()
+    if username == game_state["drawer"]:
+        if game_state["phase"] == "DRAWING":
+            force_end_round(reason="drawer_left")
+            return
+
+    if len(game_state["players"]) < MIN_PLAYERS and game_state["phase"] != "WAITING":
+        game_state["phase"] = "WAITING"
+        game_state["phase_changed_at"] = time.time()
 
 def begin_drawing_phase():
     if not game_state["turn_order"]:
@@ -139,7 +137,6 @@ def begin_drawing_phase():
         return begin_drawing_phase()
     
     word = pick_random_word()
-    game_state["phase"] = "DRAWING"
     game_state["phase"] = "DRAWING"
     game_state["phase_changed_at"] = time.time()
     game_state["drawer"] = drawer
@@ -194,7 +191,7 @@ def start_timer(seconds, on_expire):
         with lock:
             if game_state["timer_token"] != my_token:
                 return
-        on_expire()
+            on_expire()
     
     threading.Timer(seconds, fire).start()
 
@@ -207,7 +204,7 @@ def create_game_blueprint(get_curr_username):
             return None, (jsonify({"error": "Invalid username"}), 401)
         return username, None
     
-    @game_routes.routes("/join", methods = ["POST"])
+    @game_routes.route("/join", methods = ["POST"])
     def join():
         username, err = require_username()
         if err:
@@ -296,7 +293,7 @@ def create_game_blueprint(get_curr_username):
             result["correct"] = is_correct
 
         if round_just_ended:
-            force_end_round(reason = "everyon_guessed")
+            force_end_round(reason = "everyone_guessed")
 
             with lock:
                 result = public_state()
