@@ -19,15 +19,17 @@ function Register(){
 
   return (
   <>
-  <div>
+  <div className="loginBox">
     <h2>Create Account</h2>
-    <form onSubmit={handleRegister}>
-      <label>Username:
+    <form onSubmit={handleRegister} className="login-form">
+      <label><b id='input'>Username:</b>
         <input type="text" value={username} onChange={(e) => setUsername(e.target.value)}/>
-      </label><br />
-      <label>Password:
+      </label>
+
+      <label><b id='input'>Password:</b>
         <input type='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
-      </label><br />
+      </label>
+
       <button type='submit' id='signIn'>Create Account</button>
     </form>
     <p>Already have an account? <Link to="/login/">Sign In here</Link></p>
