@@ -1,4 +1,5 @@
 from sqlite3 import IntegrityError
+import os
 import subprocess
 from flask import Blueprint, jsonify, request
 from flask_bcrypt import Bcrypt
@@ -89,6 +90,17 @@ def dashboard():
 
 # github pushes should go directly to the web-app (for convenience)
 @api_routes.route('/api/update-server/', methods=['POST'])
-def update_server():
-  signature = request.headers.get('X-Hub-Signature-256')
-  return jsonify({"message": "Securely verified"}), 200
+def webhook():
+  try:
+    repo_dir = '/home/hjuarez/webAppProj'
+    subprocess.run(['git', '-C', repo_dir, 'pull'], check=True)
+
+    frontend_dir = os.path.join(repo_dir, 'frontend')
+    subprocess.run(['npm', 'run', 'build'], cwd=frontend_dir, check=True)
+
+    wsgi_file = '/var/www/hjuarez_pythonanywhere_com_wsgi.py'
+    subprocess.run(['touch', wsgi_file], check=True)
+
+    return jsonify({"message": "Server updated"}), 200
+  except subprocess.CalledProcessError as e:
+    return jsonify({"error": str(e)}), 500
