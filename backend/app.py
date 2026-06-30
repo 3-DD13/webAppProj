@@ -25,7 +25,7 @@ app.config['JWT_COOKIE_CSRF_PROTECT'] = False
 app.config['JWT_COOKIE_SAMESITE'] = 'None'
 
 jwt = JWTManager(app)
-CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}}, supports_credentials=True)
+CORS(app, resources={r"/*": {"origins": ["http://localhost:5173", "http://127.0.0.1:5173"]}}, supports_credentials=True)
 
 from routes import api_routes, bcrypt
 bcrypt.init_app(app)
