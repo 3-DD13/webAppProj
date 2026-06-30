@@ -25,6 +25,7 @@ function Dashboard(){
     <div>
       <h2>User Dashboard</h2>
       <p>{message}</p>
+      <button onClick={() => navigate('/game/')}>Enter Game Lobby</button>
       <button onClick={() => navigate('/login/')}>Sign Out</button>
     </div>
     </>

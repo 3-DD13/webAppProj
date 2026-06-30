@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './login';
-import Register from './register';
-import Dashboard from './dashboard';
+import Login from './Login';
+import Register from './Register';
+import Dashboard from './Dashboard';
+import GameRoom from './GameRoom';
 
 
 axios.defaults.withCredentials = true;
@@ -25,6 +26,7 @@ function App() {
            <Route path="/login/" element={<Login />} />
            <Route path="/register/" element={<Register />} />
            <Route path="/dashboard/" element={<Dashboard />} />
+           <Route path="/game/" element={<GameRoom />} />
          </Routes>
        </main>
 
