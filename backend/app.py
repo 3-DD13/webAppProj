@@ -1,9 +1,10 @@
 import os
 from flask import Flask, send_from_directory
 from flask_cors import CORS
-from flask_jwt_extended import JWTManager
+from flask_jwt_extended import JWTManager, get_jwt_identity, jwt_required
 from dotenv import load_dotenv
 from models import db
+from game import create_game_blueprint
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 FRONTEND_DIST = os.path.abspath(os.path.join(BASE_DIR, '..', 'frontend', 'dist'))
@@ -48,7 +49,19 @@ def serve_react(path):
   else:
     return send_from_directory(app.static_folder, 'index.html')
 
+def getCurrUser():
+  try: 
+    return get_jwt_identity()
+  except Exception:
+    return None
+  
+game_bp = create_game_blueprint(getCurrUser)
+app.register_blueprint(game_bp)
+
 if __name__ == '__main__':
   with app.app_context():
     db.create_all()
   app.run(debug=True)
+
+
+  
