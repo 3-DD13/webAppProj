@@ -8,7 +8,8 @@ from models import db
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 FRONTEND_DIST = os.path.abspath(os.path.join(BASE_DIR, '..', 'frontend', 'dist'))
 
-app = Flask(__name__, static_folder=FRONTEND_DIST, static_url_path='/')
+# app = Flask(__name__, static_folder=FRONTEND_DIST, static_url_path='/')
+app = Flask(__name__)
 
 # database config
 load_dotenv(os.path.join(BASE_DIR, '.env'))
