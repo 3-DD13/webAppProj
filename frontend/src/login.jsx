@@ -20,18 +20,20 @@ function Login(){
 
 return (
   <>
-  <div>
+  <div className='loginBox'>
     <h2>Sign In</h2>
-    <form onSubmit={handleLogin}>
-      <label>Username:
+    <form onSubmit={handleLogin} className='login-form'>
+      <label><b id='input'>Username:</b>
         <input type="text" value={username} onChange={(e) => setUsername(e.target.value)}/>
-      </label><br />
-      <label>Password:
+      </label>
+
+      <label><b id='input'>Password:</b>
         <input type='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
-      </label><br />
+      </label>
+      
       <button type='submit' id='signIn'>Sign in</button>
     </form>
-    <p>Dont have an account? <Link to="/register/">Create Account</Link></p>
+    <p>Don't have an account? <Link to="/register/">Create Account</Link></p>
   </div>
   </>
 );
