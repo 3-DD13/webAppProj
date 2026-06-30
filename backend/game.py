@@ -91,7 +91,7 @@ def start_picking_phase(socketio):
 
 def auto_pick_word(socketio, word_choices):
     with _lock:
-        if game_state["pgase"] != "PICKING_WORD":
+        if game_state["phase"] != "PICKING_WORD":
             return
         word = random.choice(word_choices)
         begin_drawing_phase(socketio, word)
