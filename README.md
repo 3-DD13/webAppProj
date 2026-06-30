@@ -30,5 +30,5 @@ npm run dev
 ```
 If changes are made to frontend/:
 ```bash
-npm run build to update frontend/dist/
+npm run build
 ```

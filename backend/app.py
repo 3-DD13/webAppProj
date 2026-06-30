@@ -19,8 +19,11 @@ db.init_app(app)
 
 app.config['JWT_SECRET_KEY'] = os.environ.get("JWT_SECRET_KEY")
 app.config['JWT_TOKEN_LOCATION'] = ["cookies"]
-app.config['JWT_COOKIE_SECURE'] = False
-app.config['JWT_COOKIE_CSRF_PROTECT'] = True
+app.config['JWT_COOKIE_SECURE'] = True
+app.config['JWT_COOKIE_CSRF_PROTECT'] = False
+
+# shares cookies between localhost and 127
+app.config['JWT_COOKIE_SAMESITE'] = 'None'
 
 jwt = JWTManager(app)
 CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}}, supports_credentials=True)
