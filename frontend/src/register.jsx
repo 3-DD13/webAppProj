@@ -6,11 +6,16 @@ function Register(){
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  // for local changes put http://127.0.0.1:5000 before /register/
+  
+  const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 
+  'http://127.0.0.1:5000' : 'https://hjuarez.pythonanywhere.com'
+
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/register/', {username, password});
+      const response = await axios.post(`${API_BASE_URL}/register/`,
+        {username, password},
+        {withCredentials: true});
       navigate('/login/');
     } catch (error) {
       alert(error.response?.data?.error || error.response?.data?.message || "Registration Failed");

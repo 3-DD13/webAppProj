@@ -5,9 +5,12 @@ import { useNavigate } from 'react-router-dom';
 function Dashboard(){
   const [message, setMessage] = useState("Loading your dashboard...");
   const navigate = useNavigate();
-  // for local changes put http://127.0.0.1:5000 before /dashboard/
+  
+  const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 
+  'http://127.0.0.1:5000' : 'https://hjuarez.pythonanywhere.com'
+
   useEffect(() => {
-    axios.get('/dashboard/')
+    axios.get(`${API_BASE_URL}/dashboard/`, { withCredentials: true})
   .then(response => {
     setMessage(response.data.message);
   })
@@ -15,7 +18,7 @@ function Dashboard(){
     alert("Unauthorized session. Please sign in again.");
     navigate('/login');
   });
-}, [navigate]);
+}, [navigate, API_BASE_URL]);
 
   return (
     <>
